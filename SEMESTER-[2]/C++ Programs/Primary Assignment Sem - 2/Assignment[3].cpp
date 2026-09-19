@@ -223,8 +223,8 @@ class SL{
                 delete t;
             }
             else{
-                Node* t;
-                Node* prev;
+                Node* t = head;
+                Node* prev = NULL;
                 while(t->next!=NULL){
                     prev = t;
                     t = t->next;
@@ -298,13 +298,21 @@ class SL{
             }
             cout<<endl;
         }
+        ~SL(){
+            Node * t;
+            while(head!=NULL){
+                t = head;
+                head = head->next;
+                delete t;
+            }
+        }
 };
 int main(){
-    SL list1(5),list2;
+    SL list1(5);
     list1.display();
     int ch,n,pos;
     while(1){
-        cout<<"\n---LINKED LIST OPERATIONS---\n"<<endl;
+        cout<<"\n\n---LINKED LIST OPERATIONS---\n"<<endl;
         cout<<"1. INSERTION AT THE BEGINNING."<<endl;
         cout<<"2. INSERTION BEFORE A POSITION."<<endl;
         cout<<"3. INSERTION AT A POSITION."<<endl;
@@ -319,6 +327,7 @@ int main(){
         cout<<"12. REVERSE THE LINKED LIST."<<endl;
         cout<<"13. CONCATINATION OF TWO LINKED LIST USING FUNCTION."<<endl;
         cout<<"14. CONCATINATION OF TWO LINKED LIST USING + OPERATOR."<<endl;
+        cout<<"15. EXIT."<<endl;
         cout<<"ENTER YOUR CHOICE : ";
         cin>>ch;
         switch(ch){
@@ -362,7 +371,74 @@ int main(){
                 list1.display();
                 break;
             case 6:
-                
+                list1.deleteBegin();
+                list1.display();
+                break;
+            case 7:
+                cout<<"Enter the position : ";
+                cin>>pos;
+                list1.deleteBeforeN(pos);
+                list1.display();
+                break;
+            case 8:
+                cout<<"Enter the position : ";
+                cin>>pos;
+                list1.deleteAtN(pos);
+                list1.display();
+                break;
+            case 9:
+                cout<<"Enter the position : ";
+                cin>>pos;
+                list1.deleteAfterN(pos);
+                list1.display();
+                break;
+            case 10:
+                list1.deleteEnd();
+                list1.display();
+                break;
+            case 11:
+                cout<<"Enter the number to search : ";
+                cin>>n;
+                list1.Search(n);
+                break;
+            case 12:
+                list1.reverse();
+                list1.display();
+                break;
+            case 13:{
+                SL list2;
+                int n,num;
+                cout<<"Enter the list two size : ";
+                cin>>n;
+                cout<<"Enter the list two : \n";
+                for(int i = 0; i < n; i++){
+                    cin>>num;
+                    list2.insertEnd(num);
+                }
+                list1.concatenate(list2);
+                list1.display();
+                break;
+            }
+            case 14:{
+                SL list2;
+                int n,num;
+                cout<<"Enter the list two size : ";
+                cin>>n;
+                cout<<"Enter the list two : ";
+                for(int i = 0; i < n; i++){
+                    cin>>num;
+                    list2.insertEnd(num);
+                }
+                SL list3 = list1 + list2;
+                list3.display();
+                break;
+            }
+            case 15:
+                cout<<"You have exited the program.";
+                return 0;
+                break;
+            default:
+                cout<<endl<<"WRONG INPUT!!!";
         }
     }
 }
