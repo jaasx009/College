@@ -1,85 +1,102 @@
-/* Write a program to search an element from a list. Give user the op on to perform Linear 
-or Binary search. */
 #include<iostream>
 using namespace std;
-class Search{
+class Matrix{
     private:
-        int *arr,n,key;
+        int n,*arr;
     public:
-        Search(){
-            arr=NULL;
-            n=0;
-            
+        Matrix(int size){
+            n=size;
+            arr = new int[n*(n+1)/2];
         }
-        void GetData(){
-            cout<<"Enter the size : ";
-            cin>>n;
-            cout<<"Enter the array elements : "<<endl;
-            arr=new int[n];
-            for(int i=0;i<n;i++)
-                cin>>arr[i];
+        void setDiagonal(int i,int j,int x){
+            if(i==j) arr[i]=x;
         }
-        int LinearSearch(){
-            cout<<"Enter the key value : ";
-            cin>>key;
+        void setLower(int i,int j,int x){
+            if(i>=j) arr[i*(i+1)/2+j]=x;
+        }
+        void setUpper(int i,int j,int x){
+            if(i<=j) arr[n*i-(i*(i-1)/2)+(j-i)]=x;
+        }
+        void setSymmetric(int i,int j,int x){
+            (i>=j)?arr[i*(i+1)/2+j]=x:arr[j*(j+1)/2+i]=x;
+        }
+        int getDiagonal(int i,int j){
+            return (i==j)?arr[i]:0;
+        }
+        int getLower(int i,int j){
+            return (i>=j)?arr[i*(i+1)/2+j]:0;
+        }
+        int getUpper(int i,int j){
+            return (i<=j)?arr[n*i-i*(i-1)/2+(j-i)]:0;
+        }
+        int getSymmetric(int i,int j){
+            return (i>=j)?arr[i*(i+1)/2+j]:arr[j*(j+1)/2+i];
+        }
+        void display(int type){
             for(int i=0;i<n;i++){
-                if(key==arr[i])
-                    return i+1;
+                for(int j=0;j<n;j++){
+                    if(type==1) cout<<getDiagonal(i,j)<<" ";
+                    else if(type==2) cout<<getLower(i,j)<<" ";
+                    else if(type==3) cout<<getUpper(i,j)<<" ";
+                    else if(type==4) cout<<getSymmetric(i,j)<<" ";
+                }
+                cout<<endl;
             }
-            return -1;
         }
-        int BinarySearch(){
-            cout<<"Enter the key value : ";
-            cin>>key;
-            int low=0;
-            int high=n-1;
-            while(low<=high){
-                int mid=(low+high)/2;
-                if(key==arr[mid])
-                    return mid+1;
-                else if(key<arr[mid])
-                    high=mid-1;
-                else
-                    low=mid+1;
-            }
-            return -1;
-        }
-        ~Search(){
-            delete[] arr;
-        }
+        ~Matrix(){delete[] arr;}
 };
 int main(){
-    Search s;
-    int choice,res;
-    do{
-        cout<<"1. Linear Search."<<endl;
-        cout<<"2. Binary Search."<<endl;
-        cout<<"3. To Quit The Program."<<endl;
-        cout<<"Enter you choice : ";
-        cin>>choice;
-        switch(choice){
-            case 1:
-                s.GetData();
-                res=s.LinearSearch();
-                break;
-            case 2 :
-                cout<<"To do the Binary Search Enter the array elements in ascending order --- "<<endl;
-                s.GetData();
-                res=s.BinarySearch();
-                break;
-            case 3 :
-                cout<<"You have exited the program.";
-                break;
-            default :
-                cout<<"Invalid choice.";
-        }
-        if((choice==1)||(choice==2)){
-            if(res==-1)
-                cout<<"Value is not found.";
-            else
-                cout<<"The Key Value is at "<<res<<" position."<<endl;
-        }
-    }while(choice!=3);
-    
+    int n,choice,x;
+    cout<<"Enter the order of the matrix : ";
+    cin>>n;
+    Matrix M(n);
+    cout<<"1. Diagonal Matrix.";
+    cout<<"\n2. Lower Triangular Matrix.";
+    cout<<"\n3. Upper Triangular Matrix.";
+    cout<<"\n4. Symmetric Matrix.";
+    cout<<"\nEnter your choice : ";
+    cin>>choice;
+    switch(choice){
+        case 1:
+            cout<<"Enter the elements : ";
+            for(int i=0;i<n;i++){
+                cin>>x;
+                M.setDiagonal(i,i,x);
+            }
+            M.display(1);
+            break;
+        case 2:
+            cout<<"Enter the elements : ";
+            for(int i=0;i<n;i++){
+                for(int j=0;j<=i;j++){
+                    cin>>x;
+                    M.setLower(i,j,x);
+                }
+            }
+            M.display(2);
+            break;
+        case 3:
+            cout<<"Enter the elements : ";
+            for(int i=0;i<n;i++){
+                for(int j=i;j<n;j++){
+                    cin>>x;
+                    M.setUpper(i,j,x);
+                }
+            }
+            M.display(3);
+            break;
+        case 4:
+            cout<<"Enter the elements : ";
+            for(int i=0;i<n;i++){
+                for (int j=0;j<=i;j++){
+                    cin>>x;
+                    M.setSymmetric(i,j,x);
+                }
+            }
+            M.display(4);
+            break;
+        default:
+            cout<<"Invalid Choice.";
+    }
     return 0;
 }
