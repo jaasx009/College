@@ -12,7 +12,7 @@
 !*.R
 !CMakeLists.txt
 !.gitignore
-
+!*.py
 # 4. Keep ignoring the junk folders from CLion
 .idea/
 cmake-build-debug/
