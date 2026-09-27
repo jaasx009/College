@@ -1,51 +1,104 @@
- /*WAP to display Fibonacci series (i) using recursion, (ii) using iteration*/
-#include <iostream>
+/* Perform Stack operations using Linked List implementation. */
+#include<iostream>
 using namespace std;
-void displayFibonacciIterative(int n) {
-    long first = 0, second = 1, next;
-
-    for (int i = 0; i < n; i++) {
-        if (i <= 1) {
-            next = i;
-        } else {
-            next = first + second;
-            first = second;
-            second = next;
+template<class T>
+class Node{
+    public:
+        T info;
+        Node<T> *next;
+        Node(T val){
+            info = val;
+            next = NULL;
         }
-        cout << next << " ";
-    }
-    cout << endl;
-}
-long fibonacciRecursive(int n) {
-    if (n == 0) {
-        return 0;
-    }
-    if (n == 1) {
-        return 1;
-    }
-    return fibonacciRecursive(n - 1) + fibonacciRecursive(n - 2);
-}
-void displayFibonacciRecursiveSeries(int terms) {
-    for (int i = 0; i < terms; i++) {
-        cout << fibonacciRecursive(i) << " ";
-    }
-    cout << endl;
-}
+};
+template<class T>
+class Stack{
+    private:
+        Node<T> *top;
+    public:
+        Stack(){
+            top = NULL;
+        }
+        void push(T val){
+            Node<T> *ptr = new Node<T>(val);
+            ptr->next = top;
+            top = ptr;
+            cout<<val<<" pushed to stack\n";
+        }
+        void pop(){
+            if(top==NULL){
+                cout<<"Stack underflow.";
+                return;
+            }
+            Node<T> *t = top;
+            top = top->next;
+            cout<<t->info<<" popped from stack.\n";
+            delete t;
+        }
+        void peek(){
+            if(top==NULL){
+                cout<<"Stack underflow.";
+                return;
+            }
+            cout<<"Top element is "<<top->info<<endl;
+        }
+        void display(){
+            if(top==NULL){
+                cout<<"Stack underflow.";
+                return;
+            }
+            Node<T> *t = top;
+            cout<<"Stack top to bottom.\n";
+            while(t!=NULL){
+                cout<<"| "<<t->info<<" |\n";
+                t = t->next;
+            }
+            cout<<"|___|\n";
+        }
+        ~Stack(){
+            Node<T> *t = top;
+            while(top!=NULL){
+                t = top;
+                top = top->next;
+                delete t;
+            }
+        }
+};
 int main() {
-    int n;
-    cout << "Enter the number of terms for the Fibonacci series: ";
-    cin >> n;
+    Stack<int> obj;
+    int ch;
+    int val;
 
-    if (n <= 0) {
-        cout << "Please enter a positive integer greater than 0." << endl;
-        return 1;
+    while (1) {
+        cout << "\n===== STACK (LINKED LIST) =====";
+        cout << "\n1. Push";
+        cout << "\n2. Pop";
+        cout << "\n3. Peek";
+        cout << "\n4. Display Stack";
+        cout << "\n0. Exit";
+        cout << "\nEnter your choice : ";
+        cin >> ch;
+
+        switch (ch) {
+            case 1:
+                cout << "Enter the value to push: ";
+                cin >> val;
+                obj.push(val);
+                break;
+            case 2:
+                obj.pop();
+                break;
+            case 3:
+                obj.peek();
+                break;
+            case 4:
+                obj.display();
+                break;
+            case 0:
+                cout << "Program ended.\n";
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+        }
     }
-
-    cout << "\n========== ITERATIVE METHOD ==========\n";
-    cout << "Fibonacci Series up to " << n << " terms: \n";
-    displayFibonacciIterative(n);
-    cout << "\n========== RECURSIVE METHOD ==========\n";
-    cout << "Fibonacci Series up to " << n << " terms: \n";
-    displayFibonacciRecursiveSeries(n);
-    return 0;
 }
