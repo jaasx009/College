@@ -2,7 +2,7 @@
 (ii) using iteration*/
 #include <iostream>
 using namespace std;
-class NumberAnalyzer {
+class Number {
     private:
         long long num;
         long long calcFactRec(long long n, long long p) {
@@ -20,7 +20,7 @@ class NumberAnalyzer {
             calcFactorsRec(n, i + 1); 
         }
     public:
-        NumberAnalyzer(long long val) {
+        Number(long long val) {
             num = val;
         }        
         void showRecursive() {
@@ -54,7 +54,7 @@ int main() {
         cout << "Factorial is not defined for negative numbers.\n";
         return 1;
     }    
-    NumberAnalyzer obj(input);
+    Number obj(input);
     obj.showRecursive();
     obj.showIterative();
     return 0;
