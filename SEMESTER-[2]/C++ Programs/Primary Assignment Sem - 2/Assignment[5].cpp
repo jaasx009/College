@@ -80,7 +80,7 @@ class CL{
                 }
                 t = t->next;
                 pos++;
-            }while(t->next!=head);
+            }while(t!=head);
             cout<<"Element not found.";
         }
         void reverse(){

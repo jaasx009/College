@@ -47,6 +47,7 @@ class Sort{
             }
         }
         void display(T arr[], int n){
+            cout<<"Sorted elements : ";
             for(int i=0;i<n;i++){
                 cout<<arr[i]<<" ";
             }

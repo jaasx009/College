@@ -1,5 +1,3 @@
-/* Write a program to search an element from a list. Give user the op on to perform Linear 
-or Binary search. */
 #include<iostream>
 using namespace std;
 class Search{
@@ -63,7 +61,7 @@ int main(){
                 res=s.LinearSearch();
                 break;
             case 2 :
-                cout<<"To do the Binary Search Enter the array elements in ascending order --- "<<endl;
+                cout<<"Enter the array elements in ascending order --- "<<endl;
                 s.GetData();
                 res=s.BinarySearch();
                 break;
