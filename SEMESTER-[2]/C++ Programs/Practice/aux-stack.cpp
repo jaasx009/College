@@ -42,6 +42,9 @@ class stack{
             }
             *this = s;
         }
+        ~stack(){
+            delete[] arr;
+        }
 };
 int main(){
     stack s;
