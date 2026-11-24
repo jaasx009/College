@@ -15,7 +15,7 @@ class BST{
     private:
         Node* root;
         Node* DeleteByMerging(Node* T,int val){
-            if(T==NULL) return;
+            if(T==NULL) return T;
             if(val<T->data){
                 T->lc = DeleteByMerging(T->lc,val);
             }
