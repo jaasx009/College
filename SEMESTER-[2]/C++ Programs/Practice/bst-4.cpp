@@ -1,6 +1,7 @@
 //WAP to create a binary tree and use the inorder traversal.
 #include<iostream>
 #include<stack>
+#include<queue>
 using namespace std;
 struct Node{
     int info;
@@ -85,12 +86,41 @@ class BST{
                 s2.pop();
             }
         }
+        void levelOrder(Node* T){
+            if(T==NULL) return;
+            queue<Node*> q;
+            q.push(T);
+            while(!q.empty()){
+                Node* ptr = q.front();
+                q.pop();
+                cout<<ptr->info<<" ";
+                if(ptr->lc!=NULL) q.push(ptr->lc);
+                if(ptr->rc!=NULL) q.push(ptr->rc);
+            }
+        }
+        void mirrorIt(Node* T){
+            if(T==NULL) return;
+            queue<Node*> q;
+            q.push(T);
+            while(!q.empty()){
+                Node* ptr = q.front();
+                q.pop();
+                Node* t = ptr->lc;
+                ptr->lc = ptr->rc;
+                ptr->rc = t;
+                if(ptr->lc!=NULL) q.push(ptr->lc);
+                if(ptr->rc!=NULL) q.push(ptr->rc);
+            }
+        }
     public:
         BST(){
             root = NULL;
         }
         void insert(int val){
             root = InsertIt(root,val);
+        }
+        void mirror(){
+            mirrorIt(root);
         }
         void display(){
             cout<<"Inorder traversal."<<endl;
@@ -102,6 +132,10 @@ class BST{
             cout<<"Postorder traversal."<<endl;
             postorder(root);
             cout<<endl;
+            cout<<"levelOrder traversal."<<endl;
+            levelOrder(root);
+            cout<<endl;
+            
         }
 };
 int main(){
@@ -112,9 +146,10 @@ int main(){
     t.insert(89);
     t.insert(23);
     t.display();
+    t.mirror();
+    t.display();
     return 0;
 }
-
 
 
 
